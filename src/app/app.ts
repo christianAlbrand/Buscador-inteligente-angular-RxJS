@@ -1,11 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { ProductSearchComponent } from './product-search/product-search';
 
 @Component({
-  imports: [],
   selector: 'app-root',
-  styleUrl: './app.css',
-  templateUrl: './app.html',
+  standalone: true,
+  imports: [ProductSearchComponent],
+  template: `<app-product-search />`,
 })
-export class App {
-  protected readonly title = signal('sistema-productos');
-}
+export class App {}
