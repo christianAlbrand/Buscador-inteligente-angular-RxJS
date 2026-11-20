@@ -1,0 +1,31 @@
+.product { display: flex; align-items: center; gap: .9rem; }
+
+.thumb {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #f1f5f9;
+  transition: transform .2s;
+}
+tr:hover .thumb { transform: scale(1.06); }
+
+.text { display: flex; flex-direction: column; min-width: 0; }
+.text strong { font-weight: 600; }
+.text small {
+  color: var(--muted);
+  font-size: .78rem;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price { font-weight: 700; white-space: nowrap; }
+.actions { text-align: right; width: 56px; }
+
+@media (max-width: 768px) {
+  .text small { display: none; }
+}

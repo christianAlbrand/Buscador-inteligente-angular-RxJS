@@ -1,0 +1,41 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <h2><i class="bi bi-plus-lg"></i> Registrar producto</h2>
+
+  <div class="form-grid">
+    <div class="field full">
+      <label>Nombre</label>
+      <input formControlName="name" placeholder="Ej. Laptop Pro 15&quot;" [class.invalid]="invalid('name')" />
+      @if (invalid('name')) { <div class="error">Mínimo 3 caracteres.</div> }
+    </div>
+
+    <div class="field">
+      <label>Categoría</label>
+      <input formControlName="category" list="cats" placeholder="Selecciona o escribe" [class.invalid]="invalid('category')" />
+      <datalist id="cats">
+        @for (c of categories$ | async; track c) { <option [value]="c"></option> }
+      </datalist>
+      @if (invalid('category')) { <div class="error">Obligatoria.</div> }
+    </div>
+
+    <div class="field">
+      <label>Precio (MXN)</label>
+      <input type="number" formControlName="price" [class.invalid]="invalid('price')" />
+      @if (invalid('price')) { <div class="error">Debe ser mayor a 0.</div> }
+    </div>
+
+    <div class="field full">
+      <label>Descripción</label>
+      <input formControlName="description" placeholder="Breve descripción del producto" [class.invalid]="invalid('description')" />
+      @if (invalid('description')) { <div class="error">Mínimo 5 caracteres.</div> }
+    </div>
+
+    <div class="field full">
+      <label>URL de imagen (opcional)</label>
+      <input formControlName="image" placeholder="https://..." />
+    </div>
+
+    <button class="btn full" type="submit">
+      <i class="bi bi-check2-circle"></i> Guardar producto
+    </button>
+  </div>
+</form>

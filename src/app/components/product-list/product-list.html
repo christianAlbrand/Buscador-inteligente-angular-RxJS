@@ -1,0 +1,39 @@
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Categoría</th>
+        <th>Precio</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of products$ | async; track p.id) {
+        <tr>
+          <td>
+            <div class="product">
+              <img class="thumb" [src]="p.image" [alt]="p.name" loading="lazy" />
+              <div class="text">
+                <strong>{{ p.name }}</strong>
+                <small>{{ p.description }}</small>
+              </div>
+            </div>
+          </td>
+          <td><span class="badge">{{ p.category }}</span></td>
+          <td class="price">{{ p.price | currency: 'MXN' : 'symbol-narrow' : '1.0-0' }}</td>
+          <td class="actions">
+            <button class="btn-icon danger" (click)="delete(p.id)" aria-label="Eliminar producto" title="Eliminar">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="4" class="empty">
+          <i class="bi bi-search" style="font-size:1.6rem;display:block;margin-bottom:.5rem"></i>
+          No hay productos que coincidan.
+        </td></tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,20 @@
+@if (stats$ | async; as s) {
+  <div class="stats">
+    <div class="stat">
+      <div class="icon blue"><i class="bi bi-boxes"></i></div>
+      <div class="info"><span>Total de productos</span><strong>{{ s.total }}</strong></div>
+    </div>
+    <div class="stat">
+      <div class="icon violet"><i class="bi bi-calculator"></i></div>
+      <div class="info"><span>Precio promedio</span><strong>{{ s.avg | currency: 'MXN' : 'symbol-narrow' : '1.0-0' }}</strong></div>
+    </div>
+    <div class="stat">
+      <div class="icon green"><i class="bi bi-arrow-down-circle"></i></div>
+      <div class="info"><span>Precio mínimo</span><strong>{{ s.min | currency: 'MXN' : 'symbol-narrow' : '1.0-0' }}</strong></div>
+    </div>
+    <div class="stat">
+      <div class="icon amber"><i class="bi bi-arrow-up-circle"></i></div>
+      <div class="info"><span>Precio máximo</span><strong>{{ s.max | currency: 'MXN' : 'symbol-narrow' : '1.0-0' }}</strong></div>
+    </div>
+  </div>
+}

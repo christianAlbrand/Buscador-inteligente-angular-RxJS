@@ -1,144 +1,15 @@
-<!-- Barra superior -->
-<header class="navbar">
-  <div class="navbar__inner">
-    <a class="navbar__brand" href="#">
-      <span class="navbar__logo">🛒</span>
-      <span>Tech<strong>Market</strong></span>
-    </a>
-
-    <div class="search-bar">
-      <span class="search-bar__icon" aria-hidden="true">🔍</span>
-      <input
-        type="text"
-        class="search-bar__input"
-        placeholder="Buscar productos por nombre..."
-        [formControl]="searchControl"
-        aria-label="Buscar producto por nombre"
-      />
-      <button
-        type="button"
-        class="search-bar__clear"
-        *ngIf="searchControl.value"
-        (click)="clearSearch()"
-        aria-label="Limpiar búsqueda"
-      >
-        ✕
-      </button>
-    </div>
-
-    <button type="button" class="cart-btn" aria-label="Carrito">
-      🛍️
-      <span class="cart-btn__badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
-    </button>
+<div class="filters">
+  <div class="search-box">
+    <i class="bi bi-search"></i>
+    <input [formControl]="search" placeholder="Buscar por nombre..." />
   </div>
-</header>
-
-<!-- Banner principal -->
-<section class="hero">
-  <div class="hero__content">
-    <span class="hero__tag">Temporada 2026</span>
-    <h1>Todo lo que necesitas, en un solo lugar</h1>
-    <p>Descubre electrónica, hogar, deportes, ropa y libros con los mejores precios.</p>
-  </div>
-</section>
-
-<main class="shop">
-  <!-- Filtros laterales -->
-  <aside class="sidebar">
-    <div class="sidebar__block">
-      <h2 class="sidebar__title">Categorías</h2>
-      <ul class="chips">
-        <li *ngFor="let cat of categories">
-          <button
-            type="button"
-            class="chip"
-            [class.chip--active]="categoryControl.value === cat"
-            (click)="setCategory(cat)"
-          >
-            <span>{{ categoryIcons[cat] }}</span> {{ cat }}
-          </button>
-        </li>
-      </ul>
-    </div>
-
-    <div class="sidebar__block">
-      <h2 class="sidebar__title">Precio</h2>
-      <ul class="chips">
-        <li *ngFor="let range of priceRanges; let i = index">
-          <button
-            type="button"
-            class="chip"
-            [class.chip--active]="priceControl.value === i"
-            (click)="setPrice(i)"
-          >
-            {{ range.label }}
-          </button>
-        </li>
-      </ul>
-    </div>
-
-    <button type="button" class="btn btn--outline" (click)="resetFilters()">
-      Limpiar filtros
-    </button>
-  </aside>
-
-  <!-- Contenido -->
-  <section class="content">
-    <ng-container *ngIf="vm$ | async as vm">
-      <div class="toolbar">
-        <p class="counter">
-          <strong>{{ vm.count }}</strong>
-          {{ vm.count === 1 ? 'producto encontrado' : 'productos encontrados' }}
-          <span class="counter__total">de {{ vm.total }}</span>
-        </p>
-
-        <div class="sort">
-          <label for="sort">Ordenar por</label>
-          <select id="sort" [formControl]="sortControl">
-            <option value="default">Destacados</option>
-            <option value="price-asc">Precio: menor a mayor</option>
-            <option value="price-desc">Precio: mayor a menor</option>
-            <option value="name">Nombre (A-Z)</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Sin coincidencias -->
-      <div class="empty" *ngIf="vm.count === 0">
-        <span class="empty__icon">🔎</span>
-        <h2>No se encontraron coincidencias</h2>
-        <p>Prueba con otro nombre, categoría o rango de precio.</p>
-        <button type="button" class="btn" (click)="resetFilters()">
-          Restablecer filtros
-        </button>
-      </div>
-
-      <!-- Tarjetas -->
-      <div class="grid" *ngIf="vm.count > 0">
-        <article class="card" *ngFor="let product of vm.items; trackBy: trackById">
-          <div class="card__image">
-            <img [src]="product.image" [alt]="product.name" loading="lazy" />
-            <span class="card__badge">{{ product.category }}</span>
-          </div>
-          <div class="card__body">
-            <h3 class="card__title">{{ product.name }}</h3>
-            <p class="card__description">{{ product.description }}</p>
-            <div class="card__footer">
-              <p class="card__price">
-                {{ product.price | currency: 'MXN' : 'symbol-narrow' : '1.0-0' }}
-                <small>MXN</small>
-              </p>
-              <button type="button" class="btn btn--small" (click)="addToCart()">
-                Agregar
-              </button>
-            </div>
-          </div>
-        </article>
-      </div>
-    </ng-container>
-  </section>
-</main>
-
-<footer class="footer">
-  <p>© 2026 TechMarket · Catálogo de productos</p>
-</footer>
+  <select [formControl]="category">
+    <option value="">Todas las categorías</option>
+    @for (c of categories$ | async; track c) { <option [value]="c">{{ c }}</option> }
+  </select>
+  <select [formControl]="sort">
+    <option value="none">Sin ordenar</option>
+    <option value="asc">Precio: menor a mayor</option>
+    <option value="desc">Precio: mayor a menor</option>
+  </select>
+</div>

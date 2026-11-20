@@ -12,3 +12,5 @@ export interface PriceRange {
   min: number;
   max: number;
 } 
+
+export type SortOrder = 'none' | 'asc' | 'desc';
